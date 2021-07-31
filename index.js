@@ -32,7 +32,7 @@ mongoose
 
 app.use(route);
 
-app.listen(3000, () => console.log("server connected"));
+const server = app.listen(3000, () => console.log("server connected"));
 
 process.on("unhandledRejection", (err) => {
   console.log(err.name, err.message);
