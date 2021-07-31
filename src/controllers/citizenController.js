@@ -97,14 +97,19 @@ exports.recievedVaccine = catchAsync(async (req, res, next) => {
 
   const { vacsinCode, hospitalCode } = req.body;
 
-  const citizen = await Citizen.findOne({ phoneNo });
+  const citizen = await Citizen.findOne({
+    phoneNo,
+    lastHospitalCode: hospitalCode,
+    "vaccinations.code": vacsinCode,
+  });
   let error;
 
   if (!citizen) {
     error = {
       statusCode: 404,
       status: "fail",
-      message: "Citizen not found",
+      message:
+        "Citizen not found or last hospital not matched or vaccination slot not booked",
     };
     return res.status(404).json(error);
   }
